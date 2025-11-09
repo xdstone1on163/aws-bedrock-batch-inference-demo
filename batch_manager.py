@@ -7,7 +7,7 @@ import json
 import os
 from datetime import datetime
 import time
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Callable
 
 
 class BatchInferenceManager:
@@ -25,7 +25,8 @@ class BatchInferenceManager:
         self.s3_region = s3_region
         self.bedrock = boto3.client('bedrock', region_name=bedrock_region)
         self.s3 = boto3.client('s3', region_name=s3_region)
-        self.sts = boto3.client('sts', region_name=bedrock_region)
+        # STS客户端使用s3_region，因为主要用于验证S3权限
+        self.sts = boto3.client('sts', region_name=s3_region)
         self.current_jobs = {}
         
     def list_input_files(self, bucket_name: str, prefix: str) -> List[Dict]:
@@ -88,7 +89,8 @@ class BatchInferenceManager:
         prompt: str,
         model_id: str,
         max_tokens: int = 2048,
-        temperature: float = 0.1
+        temperature: float = 0.1,
+        progress_callback: Optional[Callable] = None
     ) -> Tuple[List[Dict], str]:
         """
         准备批量推理的数据
@@ -100,22 +102,45 @@ class BatchInferenceManager:
             model_id: 模型ID
             max_tokens: 最大token数
             temperature: 温度参数
+            progress_callback: 进度回调函数，接收(step, current, total, details)参数
             
         Returns:
             (model_inputs列表, 临时JSONL文件名)
         """
         try:
+            # 步骤1: 扫描文件
+            if progress_callback:
+                progress_callback('scan', 0, 0, '正在扫描输入文件...')
+            
             # 获取所有文件
             files = self.list_input_files(bucket_name, prefix)
             
             if not files:
                 raise Exception(f"在 {bucket_name}/{prefix} 中未找到任何文件")
             
+            total_files = len(files)
+            if progress_callback:
+                progress_callback('scan', total_files, total_files, f'发现 {total_files} 个文件待处理')
+            
             model_inputs = []
             
-            # 处理每个文件
-            for file_info in files:
+            # 步骤2: 处理每个文件
+            for idx, file_info in enumerate(files, 1):
                 file_path = file_info['file_path']
+                file_name = file_info['file_name']
+                file_size = file_info['size']
+                
+                # 格式化文件大小
+                if file_size < 1024:
+                    size_str = f"{file_size}B"
+                elif file_size < 1024 * 1024:
+                    size_str = f"{file_size / 1024:.1f}KB"
+                else:
+                    size_str = f"{file_size / (1024 * 1024):.1f}MB"
+                
+                if progress_callback:
+                    progress_callback('process', idx, total_files, 
+                                    f'正在处理: {file_name} ({size_str})')
                 
                 # 读取文件内容
                 file_content = self.read_file_content(bucket_name, file_path)
@@ -150,6 +175,14 @@ class BatchInferenceManager:
                 }
                 
                 model_inputs.append(model_input)
+                
+                if progress_callback:
+                    progress_callback('process', idx, total_files, 
+                                    f'已完成: {file_name} ({size_str})')
+            
+            # 步骤3: 生成JSONL文件
+            if progress_callback:
+                progress_callback('generate', 0, 1, '正在生成批处理JSONL文件...')
             
             # 生成临时文件名
             timestamp = int(datetime.now().timestamp())
@@ -161,9 +194,14 @@ class BatchInferenceManager:
                     json_str = json.dumps(item, ensure_ascii=False)
                     f.write(json_str + '\n')
             
+            if progress_callback:
+                progress_callback('generate', 1, 1, f'JSONL文件生成完成: {filename}')
+            
             return model_inputs, filename
             
         except Exception as e:
+            if progress_callback:
+                progress_callback('error', 0, 0, f'处理失败: {str(e)}')
             raise Exception(f"准备批量数据失败: {str(e)}")
     
     def normalize_prefix(self, prefix: str) -> str:
@@ -247,6 +285,93 @@ class BatchInferenceManager:
         except Exception as e:
             raise Exception(f"上传文件到S3失败: {str(e)}")
     
+    def create_batch_job_from_jsonl(
+        self,
+        jsonl_s3_uri: str,
+        output_bucket: str,
+        output_prefix: str,
+        model_id: str,
+        role_arn: str,
+        job_name: Optional[str] = None
+    ) -> Dict:
+        """
+        使用已有的JSONL文件创建批量推理任务
+        
+        Args:
+            jsonl_s3_uri: JSONL文件的S3 URI (例如: s3://bucket/path/file.jsonl)
+            output_bucket: 输出bucket名称
+            output_prefix: 输出路径前缀
+            model_id: 模型ID
+            role_arn: IAM角色ARN
+            job_name: 任务名称（可选）
+            
+        Returns:
+            任务信息字典
+        """
+        try:
+            # 规范化输出前缀
+            output_prefix = self.normalize_prefix(output_prefix)
+            
+            # 配置输入输出
+            input_data_config = {
+                "s3InputDataConfig": {
+                    "s3Uri": jsonl_s3_uri
+                }
+            }
+            
+            # 构建输出URI
+            if output_prefix:
+                output_s3_uri = f"s3://{output_bucket}/{output_prefix}"
+            else:
+                output_s3_uri = f"s3://{output_bucket}/"
+            
+            output_data_config = {
+                "s3OutputDataConfig": {
+                    "s3Uri": output_s3_uri
+                }
+            }
+            
+            # 生成任务名称
+            if not job_name:
+                job_name = f"batch-job-{int(datetime.now().timestamp())}"
+            
+            # 提交批量推理任务
+            response = self.bedrock.create_model_invocation_job(
+                roleArn=role_arn,
+                modelId=model_id,
+                jobName=job_name,
+                inputDataConfig=input_data_config,
+                outputDataConfig=output_data_config
+            )
+            
+            job_arn = response.get('jobArn')
+            
+            # 保存任务信息
+            self.current_jobs[job_arn] = {
+                'job_arn': job_arn,
+                'job_name': job_name,
+                'model_id': model_id,
+                'status': 'Submitted',
+                'start_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'output_bucket': output_bucket,
+                'output_prefix': output_prefix,
+                'input_jsonl_uri': jsonl_s3_uri
+            }
+            
+            return {
+                'success': True,
+                'job_arn': job_arn,
+                'job_name': job_name,
+                'message': f"成功提交批量推理任务（使用已有JSONL文件）"
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e),
+                'message': f"创建批量任务失败: {str(e)}"
+            }
+    
     def create_batch_job(
         self,
         input_bucket: str,
@@ -257,7 +382,8 @@ class BatchInferenceManager:
         role_arn: str,
         prompt: str,
         job_name: Optional[str] = None,
-        local_files: Optional[List[str]] = None
+        local_files: Optional[List[str]] = None,
+        progress_callback: Optional[Callable] = None
     ) -> Dict:
         """
         创建批量推理任务
@@ -272,6 +398,7 @@ class BatchInferenceManager:
             prompt: 处理提示词
             job_name: 任务名称（可选）
             local_files: 本地文件列表（可选，如果提供则先上传到S3）
+            progress_callback: 进度回调函数（可选）
             
         Returns:
             任务信息字典
@@ -279,6 +406,9 @@ class BatchInferenceManager:
         try:
             # 如果提供了本地文件，先上传到raw_data目录
             if local_files:
+                if progress_callback:
+                    progress_callback('upload', 0, len(local_files), '正在上传本地文件到S3...')
+                    
                 raw_data_prefix = self.normalize_prefix(input_prefix) + "raw_data"
                 uploaded_files = self.upload_local_files(
                     local_files, 
@@ -287,17 +417,22 @@ class BatchInferenceManager:
                 )
                 # 使用raw_data目录作为输入前缀
                 input_prefix = raw_data_prefix
+                
+                if progress_callback:
+                    progress_callback('upload', len(local_files), len(local_files), 
+                                    f'已上传 {len(local_files)} 个本地文件')
             
             # 规范化前缀
             input_prefix = self.normalize_prefix(input_prefix)
             output_prefix = self.normalize_prefix(output_prefix)
             
-            # 准备批量数据
+            # 准备批量数据（带进度回调）
             model_inputs, filename = self.prepare_batch_data(
                 input_bucket, 
                 input_prefix, 
                 prompt,
-                model_id
+                model_id,
+                progress_callback=progress_callback
             )
             
             # 上传JSONL文件到S3
@@ -307,6 +442,10 @@ class BatchInferenceManager:
             else:
                 s3_key = filename
             input_s3_uri = self.upload_to_s3(filename, input_bucket, s3_key)
+            
+            # 记录JSONL文件位置
+            if progress_callback:
+                progress_callback('upload', 1, 1, f'✅ JSONL文件已上传到: {input_s3_uri}')
             
             # 清理本地临时文件
             if os.path.exists(filename):
@@ -507,47 +646,102 @@ class BatchInferenceManager:
             # 获取job_id
             job_id = job_arn.split('/')[-1]
             
-            # 构建输出文件路径
-            if output_prefix:
-                output_file_prefix = f"{output_prefix}{job_id}/"
-            else:
-                output_file_prefix = f"{job_id}/"
+            # 尝试多种可能的路径组合查找结果文件
+            possible_prefixes = []
             
-            # 列出输出文件
-            response = self.s3.list_objects_v2(
-                Bucket=output_bucket, 
-                Prefix=output_file_prefix
-            )
+            # 规范化 output_prefix
+            normalized_prefix = self.normalize_prefix(output_prefix) if output_prefix else ""
+            
+            # 构建可能的路径列表
+            if normalized_prefix:
+                # 路径1: output_prefix + job_id/
+                possible_prefixes.append(f"{normalized_prefix}{job_id}/")
+                # 路径2: output_prefix (直接在prefix下)
+                possible_prefixes.append(normalized_prefix)
+                # 路径3: output_prefix + job_id (没有尾部斜杠)
+                possible_prefixes.append(f"{normalized_prefix}{job_id}")
+            else:
+                # 路径4: 只有job_id/
+                possible_prefixes.append(f"{job_id}/")
+                # 路径5: 只有job_id
+                possible_prefixes.append(job_id)
+            
+            # 调试信息：记录尝试的路径
+            print(f"[DEBUG] 正在查找结果文件，Job ID: {job_id}")
+            print(f"[DEBUG] 将尝试以下路径: {possible_prefixes}")
             
             results = []
             result_file_key = None
+            found_prefix = None
             
-            if 'Contents' in response:
-                for obj in response['Contents']:
-                    # 查找.out文件
-                    if obj['Key'].endswith('.out'):
-                        result_file_key = obj['Key']
-                        # 读取结果文件
-                        file_response = self.s3.get_object(
-                            Bucket=output_bucket, 
-                            Key=obj['Key']
-                        )
-                        content = file_response['Body'].read().decode('utf-8')
+            # 依次尝试每个可能的路径
+            for prefix in possible_prefixes:
+                print(f"[DEBUG] 尝试路径: s3://{output_bucket}/{prefix}")
+                
+                try:
+                    response = self.s3.list_objects_v2(
+                        Bucket=output_bucket, 
+                        Prefix=prefix
+                    )
+                    
+                    if 'Contents' in response:
+                        print(f"[DEBUG] 在路径 {prefix} 下找到 {len(response['Contents'])} 个文件")
                         
-                        # 解析JSONL格式
-                        for line in content.strip().split('\n'):
-                            if line:
-                                result = json.loads(line)
-                                results.append({
-                                    'record_id': result.get('recordId'),
-                                    'output_text': result['modelOutput']['content'][0]['text'],
-                                    'input_tokens': result['modelOutput']['usage']['input_tokens'],
-                                    'output_tokens': result['modelOutput']['usage']['output_tokens'],
-                                    'stop_reason': result['modelOutput']['stop_reason']
-                                })
+                        # 列出找到的文件（用于调试）
+                        for obj in response['Contents']:
+                            print(f"[DEBUG]   - {obj['Key']}")
+                            
+                            # 查找.out文件
+                            if obj['Key'].endswith('.out') or obj['Key'].endswith('.jsonl.out'):
+                                result_file_key = obj['Key']
+                                found_prefix = prefix
+                                print(f"[DEBUG] ✓ 找到结果文件: {result_file_key}")
+                                
+                                # 读取结果文件
+                                file_response = self.s3.get_object(
+                                    Bucket=output_bucket, 
+                                    Key=obj['Key']
+                                )
+                                content = file_response['Body'].read().decode('utf-8')
+                                
+                                # 解析JSONL格式
+                                for line in content.strip().split('\n'):
+                                    if line:
+                                        result = json.loads(line)
+                                        results.append({
+                                            'record_id': result.get('recordId'),
+                                            'output_text': result['modelOutput']['content'][0]['text'],
+                                            'input_tokens': result['modelOutput']['usage']['input_tokens'],
+                                            'output_tokens': result['modelOutput']['usage']['output_tokens'],
+                                            'stop_reason': result['modelOutput']['stop_reason']
+                                        })
+                                
+                                # 找到结果后立即退出循环
+                                break
+                        
+                        # 如果已经找到结果，退出外层循环
+                        if results:
+                            break
+                    else:
+                        print(f"[DEBUG] 路径 {prefix} 下没有文件")
+                        
+                except Exception as e:
+                    print(f"[DEBUG] 检查路径 {prefix} 时出错: {str(e)}")
+                    continue
             
+            # 如果没有找到结果，提供详细的调试信息
             if not results:
-                raise Exception("未找到结果文件")
+                # 列出整个输出bucket的结构以帮助调试
+                debug_info = self._debug_s3_structure(output_bucket, normalized_prefix, job_id)
+                error_msg = f"未找到结果文件\n\n调试信息:\n"
+                error_msg += f"- Job ID: {job_id}\n"
+                error_msg += f"- 输出Bucket: {output_bucket}\n"
+                error_msg += f"- 输出前缀: {normalized_prefix or '(根目录)'}\n"
+                error_msg += f"- 尝试的路径: {', '.join(possible_prefixes)}\n\n"
+                error_msg += f"S3目录结构:\n{debug_info}"
+                raise Exception(error_msg)
+            
+            print(f"[DEBUG] ✓ 成功解析 {len(results)} 条结果记录")
             
             # 计算统计信息
             total_records = len(results)
@@ -575,6 +769,95 @@ class BatchInferenceManager:
             
         except Exception as e:
             raise Exception(f"获取任务结果失败: {str(e)}")
+    
+    def _debug_s3_structure(self, bucket: str, prefix: str, job_id: str) -> str:
+        """
+        调试S3文件结构，帮助定位结果文件
+        
+        Args:
+            bucket: S3 bucket名称
+            prefix: 路径前缀
+            job_id: 任务ID
+            
+        Returns:
+            格式化的S3目录结构字符串
+        """
+        try:
+            debug_lines = []
+            
+            # 尝试列出与job_id相关的所有文件
+            # 1. 尝试列出prefix下的所有文件
+            if prefix:
+                debug_lines.append(f"\n1. 检查前缀路径: s3://{bucket}/{prefix}")
+                try:
+                    response = self.s3.list_objects_v2(
+                        Bucket=bucket,
+                        Prefix=prefix,
+                        MaxKeys=100
+                    )
+                    if 'Contents' in response:
+                        debug_lines.append(f"   找到 {len(response['Contents'])} 个文件:")
+                        for obj in response['Contents'][:20]:  # 只显示前20个
+                            debug_lines.append(f"   - {obj['Key']}")
+                        if len(response['Contents']) > 20:
+                            debug_lines.append(f"   ... 还有 {len(response['Contents']) - 20} 个文件")
+                    else:
+                        debug_lines.append("   (空目录)")
+                except Exception as e:
+                    debug_lines.append(f"   错误: {str(e)}")
+            
+            # 2. 搜索包含job_id的文件
+            debug_lines.append(f"\n2. 搜索包含Job ID的文件: {job_id}")
+            try:
+                # 列出整个bucket（限制结果数量）
+                response = self.s3.list_objects_v2(
+                    Bucket=bucket,
+                    MaxKeys=1000
+                )
+                if 'Contents' in response:
+                    matching_files = [obj for obj in response['Contents'] if job_id in obj['Key']]
+                    if matching_files:
+                        debug_lines.append(f"   找到 {len(matching_files)} 个包含Job ID的文件:")
+                        for obj in matching_files[:10]:  # 只显示前10个
+                            debug_lines.append(f"   - {obj['Key']}")
+                        if len(matching_files) > 10:
+                            debug_lines.append(f"   ... 还有 {len(matching_files) - 10} 个文件")
+                    else:
+                        debug_lines.append(f"   未找到包含'{job_id}'的文件")
+                else:
+                    debug_lines.append("   Bucket为空")
+            except Exception as e:
+                debug_lines.append(f"   错误: {str(e)}")
+            
+            # 3. 列出bucket根目录的顶层文件/文件夹
+            debug_lines.append(f"\n3. Bucket根目录结构: s3://{bucket}/")
+            try:
+                response = self.s3.list_objects_v2(
+                    Bucket=bucket,
+                    Delimiter='/',
+                    MaxKeys=50
+                )
+                
+                # 列出文件夹
+                if 'CommonPrefixes' in response:
+                    debug_lines.append("   文件夹:")
+                    for prefix_info in response['CommonPrefixes'][:20]:
+                        debug_lines.append(f"   - {prefix_info['Prefix']}")
+                
+                # 列出文件
+                if 'Contents' in response:
+                    files = [obj for obj in response['Contents'] if not obj['Key'].endswith('/')]
+                    if files:
+                        debug_lines.append("   文件:")
+                        for obj in files[:10]:
+                            debug_lines.append(f"   - {obj['Key']}")
+            except Exception as e:
+                debug_lines.append(f"   错误: {str(e)}")
+            
+            return "\n".join(debug_lines)
+            
+        except Exception as e:
+            return f"调试信息获取失败: {str(e)}"
     
     def validate_permissions(
         self, 

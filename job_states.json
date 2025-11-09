@@ -1,0 +1,29 @@
+{
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/5g4xmpn3twls": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/5g4xmpn3twls",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-09T17:51:30.371389"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/hsb55kunrmuf": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/hsb55kunrmuf",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-09T19:22:32.591733"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/ucxwb3adsm62": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/ucxwb3adsm62",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-09T20:04:33.019836"
+  }
+}
