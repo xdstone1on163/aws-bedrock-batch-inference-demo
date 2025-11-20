@@ -85,6 +85,8 @@ python app.py
 ## 📖 使用指南
 
 ### 文本批处理
+<img width="1533" height="1079" alt="Screenshot 2025-11-20 at 2 09 35 PM" src="https://github.com/user-attachments/assets/78721076-216a-4259-931b-97527fe77811" />
+
 
 1. **准备数据**：将.txt文件上传到S3
    ```
@@ -107,6 +109,8 @@ python app.py
    - 任务完成后"获取结果"
 
 ### 图片批处理
+<img width="1556" height="1213" alt="Screenshot 2025-11-20 at 2 09 44 PM" src="https://github.com/user-attachments/assets/21446219-5339-4d50-a9cd-d4b7ac669970" />
+
 
 1. **准备数据**：将图片文件上传到S3
    ```
@@ -128,6 +132,8 @@ python app.py
    - Base64编码后不超过25MB限制
 
 ### 视频批处理
+<img width="1589" height="1208" alt="Screenshot 2025-11-20 at 2 09 56 PM" src="https://github.com/user-attachments/assets/81c418f7-dc2c-4c0e-a2f9-ec66bbdd22b2" />
+
 
 1. **准备数据**：将视频文件上传到S3
    ```
