@@ -25,5 +25,536 @@
     "input_bucket": "general-demo-1",
     "input_prefix": "bluefocus-raw_data/textual",
     "timestamp": "2025-11-09T20:04:33.019836"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/mxjqlt5926yt": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/mxjqlt5926yt",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-09T20:30:02.152306"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/l8s80csu3y25": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/l8s80csu3y25",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-09T20:50:50.311625"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/oe8ok2i3d2x8": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/oe8ok2i3d2x8",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-09T21:10:42.386461"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/lnxm4cicouqg": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/lnxm4cicouqg",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-09T21:49:32.637747"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/oqqqcplcxa8t": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/oqqqcplcxa8t",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-09T22:20:20.104509"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/n01otivd6iqm": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/n01otivd6iqm",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-10T12:30:28.864273"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/0t6t8zvvyx4e": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/0t6t8zvvyx4e",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-10T12:51:59.235336"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/qj7uwptrwf8p": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/qj7uwptrwf8p",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-10T20:48:00.300057"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/7cxkfkphsaa1": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/7cxkfkphsaa1",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-10T20:54:57.487810"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/a7ci5ycomd3n": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/a7ci5ycomd3n",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-10T21:34:55.424571"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/e49nr58xasc4": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/e49nr58xasc4",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T00:27:31.647411"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/jmdtz03638s7": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/jmdtz03638s7",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T00:49:06.528926"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/eh7zno5rq5x8": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/eh7zno5rq5x8",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T01:12:55.060555"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/m0s0i1z1ouyt": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/m0s0i1z1ouyt",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T08:10:14.137071"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/y923ojdduv4o": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/y923ojdduv4o",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-14T09:36:24.421121"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/alutqlcg3y33": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/alutqlcg3y33",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-14T10:14:43.559738"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/7shdax3f9xlb": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/7shdax3f9xlb",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T10:43:38.489845"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/kluvc8eeri48": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/kluvc8eeri48",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T11:10:33.417276"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/az0torxs60mq": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/az0torxs60mq",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T16:57:52.098086"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/5na7v6dgdouu": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/5na7v6dgdouu",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T17:26:37.707018"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/s8h9r19s9k0n": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/s8h9r19s9k0n",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T17:51:32.436316"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/4f7yoxb95665": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/4f7yoxb95665",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T18:10:33.417330"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/qmvjoaker0uk": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/qmvjoaker0uk",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T20:12:00.867210"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/6tq2lf3hi7e9": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/6tq2lf3hi7e9",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T20:46:00.278533"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/1dfiug06230e": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/1dfiug06230e",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T21:06:40.901521"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/prepjt9y7uy6": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/prepjt9y7uy6",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-14T21:32:11.299392"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/6cjbvrp8rben": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/6cjbvrp8rben",
+    "output_bucket": "general-demo-1",
+    "output_prefix": "bluefocus-batch-input/bluefocus-batch-output",
+    "aws_region": "us-east-1",
+    "input_bucket": "general-demo-1",
+    "input_prefix": "bluefocus-raw_data/textual",
+    "timestamp": "2025-11-15T10:27:47.131541"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/r4cwtb5wj172": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/r4cwtb5wj172",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-15T11:37:35.238549"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/mswtunw2vnr1": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/mswtunw2vnr1",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "bluefocus-batch-output",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures",
+    "timestamp": "2025-11-15T15:05:17.019817"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/dcclnxn7wtf0": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/dcclnxn7wtf0",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "iqiyi-ads-videos/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "iqiyi-ads-videos/animals/",
+    "timestamp": "2025-11-15T19:09:33.682501"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/ws4tni0w4r9a": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/ws4tni0w4r9a",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "iqiyi-ads-videos/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "iqiyi-ads-videos/animals/",
+    "timestamp": "2025-11-15T21:13:38.988598"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/k43s5nrhdiru": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/k43s5nrhdiru",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-19T11:50:12.392065"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/jdigzzoo1ch6": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/jdigzzoo1ch6",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-19T11:55:40.507756"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/i6awiqgsvvtu": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/i6awiqgsvvtu",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-19T12:04:09.456136"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/4snpzmagfnej": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/4snpzmagfnej",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-19T12:48:31.317884"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/8g97q9sy52qp": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/8g97q9sy52qp",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures-101-items/",
+    "timestamp": "2025-11-19T12:57:26.117839"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/lwbuw8jzq9gm": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/lwbuw8jzq9gm",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures-101-items/",
+    "timestamp": "2025-11-19T13:15:44.489337"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/nwld9c5k8cce": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/nwld9c5k8cce",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-19T13:25:30.656468"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/o3i2ld3mclyy": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/o3i2ld3mclyy",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures-101-items/",
+    "timestamp": "2025-11-19T13:39:48.514611"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/789h7rwirs6i": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/789h7rwirs6i",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-video-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "batch-demo-videos-101-items/",
+    "timestamp": "2025-11-19T14:39:40.614134"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/1zq64e7oxjxe": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/1zq64e7oxjxe",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures-101-items/",
+    "timestamp": "2025-11-19T15:27:56.524192"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/1gh3c7qplxp6": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/1gh3c7qplxp6",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-19T18:48:55.586796"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/5tpfv9bypyke": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/5tpfv9bypyke",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures-101-items/",
+    "timestamp": "2025-11-19T19:08:20.112027"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/on9qlr9l4oxp": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/on9qlr9l4oxp",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-video-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "batch-demo-videos-101-items/",
+    "timestamp": "2025-11-19T19:39:20.134855"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/9hc4iu05tk1a": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/9hc4iu05tk1a",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-video-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "batch-demo-videos-101-items/",
+    "timestamp": "2025-11-19T20:13:00.202523"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/ckuf0rje8e9c": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/ckuf0rje8e9c",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-video-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "batch-demo-videos-101-items/",
+    "timestamp": "2025-11-19T20:44:05.036600"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/lgv0m625jtf5": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/lgv0m625jtf5",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-19T21:29:11.217687"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/ihhgfn6s5gz3": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/ihhgfn6s5gz3",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures-101-items/",
+    "timestamp": "2025-11-19T21:46:45.820117"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/17za6oeqwr86": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/17za6oeqwr86",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-video-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "batch-demo-videos-101-items/",
+    "timestamp": "2025-11-19T21:50:11.720171"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/y4bjd4wujs5j": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/y4bjd4wujs5j",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-20T06:36:03.990012"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/y2grq62hj2k3": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/y2grq62hj2k3",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures-101-items/",
+    "timestamp": "2025-11-20T06:52:27.483188"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/ypz97u48rtcz": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/ypz97u48rtcz",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-video-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "batch-demo-videos-101-items/",
+    "timestamp": "2025-11-20T07:26:15.577424"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/r6nph2o0cbus": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/r6nph2o0cbus",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-20T10:00:08.135210"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/6s4lh13idvi7": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/6s4lh13idvi7",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-20T10:37:13.994593"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/pmj31liqiwu5": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/pmj31liqiwu5",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-20T11:02:36.845905"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/6eb8iwidme2c": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/6eb8iwidme2c",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-20T11:27:11.431722"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/xih2d4qkqkx8": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/xih2d4qkqkx8",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures-101-items/",
+    "timestamp": "2025-11-20T12:09:07.778751"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/7f90biabsquk": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/7f90biabsquk",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-video-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "batch-demo-videos-101-items/",
+    "timestamp": "2025-11-20T12:28:35.189343"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/a98pi4n70t8w": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/a98pi4n70t8w",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-video-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "batch-demo-videos-101-items/",
+    "timestamp": "2025-11-20T12:49:01.389153"
   }
 }

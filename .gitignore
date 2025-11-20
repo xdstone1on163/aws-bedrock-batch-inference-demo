@@ -58,3 +58,8 @@ tmp/
 # 测试文件
 test_*.py
 *_test.py
+
+# 旧版本和待删除目录
+to-be-deleted/
+version1-text-batch/
+version2-text-and-image-batch/
