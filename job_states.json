@@ -583,5 +583,41 @@
     "input_bucket": "batch-demo-txt-101-items",
     "input_prefix": "",
     "timestamp": "2025-11-21T11:28:59.763645"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/narqeoas9fyo": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/narqeoas9fyo",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-21T12:27:46.738000"
+  },
+  "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/u8unezsgt3x7": {
+    "job_arn": "arn:aws:bedrock:us-east-1:813923830882:model-invocation-job/u8unezsgt3x7",
+    "output_bucket": "batch-demo-txt-101-items",
+    "output_prefix": "batch-output/",
+    "aws_region": "us-east-1",
+    "input_bucket": "batch-demo-txt-101-items",
+    "input_prefix": "",
+    "timestamp": "2025-11-21T13:05:19.325100"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/sn28frf1bwpt": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/sn28frf1bwpt",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "input/pictures-101-items/",
+    "timestamp": "2025-11-21T13:24:42.447303"
+  },
+  "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/5oltam3c4qmo": {
+    "job_arn": "arn:aws:bedrock:us-west-2:813923830882:model-invocation-job/5oltam3c4qmo",
+    "output_bucket": "general-demo-3",
+    "output_prefix": "input/batch-video-output/",
+    "aws_region": "us-west-2",
+    "input_bucket": "general-demo-3",
+    "input_prefix": "batch-demo-videos-101-items/",
+    "timestamp": "2025-11-21T14:14:05.119340"
   }
 }

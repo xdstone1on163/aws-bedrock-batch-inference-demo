@@ -1,0 +1,58 @@
+Resources:
+  StateMachinea0d31e05:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      Definition:
+        Comment: Process S3 files and generate JSONL for Bedrock batch inference
+        StartAt: ListObjects
+        States:
+          ListObjects:
+            Type: Task
+            Resource: arn:aws:states:::aws-sdk:s3:listObjectsV2
+            Parameters:
+              Bucket.$: $.bucket
+              Prefix.$: $.prefix
+            ResultPath: $.listResult
+            Next: ProcessFiles
+          ProcessFiles:
+            Type: Map
+            ItemsPath: $.listResult.Contents
+            ItemProcessor:
+              ProcessorConfig:
+                Mode: INLINE
+              StartAt: ProcessFile
+              States:
+                ProcessFile:
+                  Type: Task
+                  Resource: arn:aws:states:::lambda:invoke
+                  Parameters:
+                    FunctionName: ${lambdainvoke_FunctionName_f83288c3}
+                    Payload:
+                      bucket.$: $$.Execution.Input.bucket
+                      key.$: $.Key
+                  ResultPath: null
+                  End: true
+            Next: GenerateJsonl
+            MaxConcurrency: 1000
+            ResultPath: null
+          GenerateJsonl:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: ${lambdainvoke_FunctionName_d0de8005}
+              Payload:
+                bucket.$: $.bucket
+                tableName: file_processing_result
+            End: true
+      DefinitionSubstitutions:
+        lambdainvoke_FunctionName_f83288c3: arn:aws:lambda:us-west-2:813923830882:function:process-file
+        lambdainvoke_FunctionName_d0de8005: arn:aws:lambda:us-west-2:813923830882:function:generate-jsonl
+      RoleArn: >-
+        arn:aws:iam::813923830882:role/s3-file-processor-stack-StepFunctionsRole-mL0zTF2D1ddJ
+      StateMachineName: StateMachinea0d31e05
+      StateMachineType: STANDARD
+      EncryptionConfiguration:
+        Type: AWS_OWNED_KEY
+      LoggingConfiguration:
+        Level: 'OFF'
+        IncludeExecutionData: false
