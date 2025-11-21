@@ -553,6 +553,8 @@ def get_results(job_arn: str) -> tuple:
         bucket = result_data['bucket']
         key = result_data['key']
         parse_warning = result_data.get('parse_warning', '')
+        manifest = result_data.get('manifest')
+        manifest_s3_uri = result_data.get('manifest_s3_uri')
         
         # 转换预览数据为DataFrame（截取output_text前200字符）
         preview_data = []
@@ -591,7 +593,22 @@ def get_results(job_arn: str) -> tuple:
 - **Bucket**: {bucket}
 - **Key**: {key}
 - **文件名**: {file_name}
-
+"""
+            
+            # 添加manifest信息（如果存在）
+            if manifest:
+                message += f"""
+#### 📊 任务统计信息 (Manifest)
+- **总记录数**: {manifest.get('totalRecordCount', 'N/A')}
+- **已处理记录数**: {manifest.get('processedRecordCount', 'N/A')}
+- **成功记录数**: {manifest.get('successRecordCount', 'N/A')}
+- **失败记录数**: {manifest.get('errorRecordCount', 'N/A')}
+- **输入Token数**: {manifest.get('inputTokenCount', 'N/A')}
+- **输出Token数**: {manifest.get('outputTokenCount', 'N/A')}
+- **Manifest文件**: `{manifest_s3_uri}`
+"""
+            
+            message += """
 #### 📋 数据预览（前几行）
 *下方表格显示部分记录的预览*
 

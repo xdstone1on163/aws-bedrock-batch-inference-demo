@@ -84,7 +84,7 @@ def create_text_batch_interface(job_arn_state, results_ready_state):
                 with gr.Row():
                     model_dropdown = gr.Dropdown(
                         choices=list(TEXT_MODELS.keys()),
-                        value="Claude 3 Haiku",
+                        value="Claude Sonnet 4",
                         label="选择模型 *"
                     )
                     role_arn_input = gr.Textbox(

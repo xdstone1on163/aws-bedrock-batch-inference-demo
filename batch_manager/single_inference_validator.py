@@ -66,6 +66,26 @@ class SingleInferenceValidator:
                 # JSONL模式：读取第一个item
                 logger.debug("JSONL模式：读取第一个item")
                 model_input, file_info = self._get_first_jsonl_item(jsonl_s3_uri)
+                
+                # 检查JSONL格式是否与当前模型匹配
+                is_nova_model = 'nova' in model_id.lower()
+                is_nova_format = 'schemaVersion' in model_input and 'inferenceConfig' in model_input
+                is_claude_format = 'anthropic_version' in model_input and 'max_tokens' in model_input
+                
+                if is_nova_model and is_claude_format:
+                    logger.warning("⚠️ JSONL文件为Claude格式，但选择了Nova模型")
+                    return self._error_result(
+                        "JSONL文件格式不匹配：文件是为Claude模型生成的（包含max_tokens），"
+                        "但您选择了Nova模型。请使用匹配的模型或重新生成JSONL文件。"
+                    )
+                elif not is_nova_model and is_nova_format:
+                    logger.warning("⚠️ JSONL文件为Nova格式，但选择了Claude模型")
+                    return self._error_result(
+                        "JSONL文件格式不匹配：文件是为Nova模型生成的（包含inferenceConfig），"
+                        "但您选择了Claude模型。请使用匹配的模型或重新生成JSONL文件。"
+                    )
+                
+                logger.debug(f"JSONL格式检查通过 - Nova模型: {is_nova_model}, Nova格式: {is_nova_format}, Claude格式: {is_claude_format}")
             else:
                 # 原始文件模式：随机选择一个txt文件
                 logger.debug("原始文件模式：随机选择txt文件")
@@ -167,8 +187,29 @@ class SingleInferenceValidator:
         logger.info("🧪 开始图片推理验证...")
         try:
             if use_jsonl:
-                # JSONL模式
+                # JSONL模式：读取第一个item
+                logger.debug("JSONL模式：读取第一个item")
                 model_input, file_info = self._get_first_jsonl_item(jsonl_s3_uri)
+                
+                # 检查JSONL格式是否与当前模型匹配
+                is_nova_model = 'nova' in model_id.lower()
+                is_nova_format = 'schemaVersion' in model_input and 'inferenceConfig' in model_input
+                is_claude_format = 'anthropic_version' in model_input and 'max_tokens' in model_input
+                
+                if is_nova_model and is_claude_format:
+                    logger.warning("⚠️ JSONL文件为Claude格式，但选择了Nova模型")
+                    return self._error_result(
+                        "JSONL文件格式不匹配：文件是为Claude模型生成的（包含max_tokens），"
+                        "但您选择了Nova模型。请使用匹配的模型或重新生成JSONL文件。"
+                    )
+                elif not is_nova_model and is_nova_format:
+                    logger.warning("⚠️ JSONL文件为Nova格式，但选择了Claude模型")
+                    return self._error_result(
+                        "JSONL文件格式不匹配：文件是为Nova模型生成的（包含inferenceConfig），"
+                        "但您选择了Claude模型。请使用匹配的模型或重新生成JSONL文件。"
+                    )
+                
+                logger.debug(f"JSONL格式检查通过 - Nova模型: {is_nova_model}, Nova格式: {is_nova_format}, Claude格式: {is_claude_format}")
             else:
                 # 原始文件模式：随机选择一个图片
                 files = self.s3_manager.list_files(input_bucket, input_prefix)

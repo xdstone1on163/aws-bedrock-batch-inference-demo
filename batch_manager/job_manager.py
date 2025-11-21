@@ -263,29 +263,54 @@ class JobManager:
             
             logger.debug(f"找到 {len(all_files)} 个文件: {all_files}")
             
-            # 查找结果文件
+            # 查找结果文件和manifest文件
+            manifest_file_key = None
+            manifest_data = None
+            
             if 'Contents' in response:
-                # 查找.out文件（跳过目录和manifest）
-                logger.debug(f"步骤5: 搜索.jsonl.out结果文件...")
+                # 查找.out文件（包括manifest和结果文件）
+                logger.debug(f"步骤5: 搜索结果文件和manifest文件...")
                 candidate_files = []
                 
                 for obj in response['Contents']:
                     key = obj['Key']
                     
-                    # 跳过目录本身和manifest文件
-                    if key.endswith('/') or 'manifest' in key.lower():
-                        logger.debug(f"跳过: {key}")
+                    # 跳过目录本身
+                    if key.endswith('/'):
+                        logger.debug(f"跳过目录: {key}")
+                        continue
+                    
+                    # 查找manifest文件
+                    if 'manifest.json.out' in key.lower():
+                        manifest_file_key = key
+                        logger.debug(f"找到manifest文件: {key}")
                         continue
                     
                     # 收集所有.jsonl.out文件作为候选
                     if key.endswith('.jsonl.out'):
                         candidate_files.append(key)
-                        logger.debug(f"候选文件: {key}")
+                        logger.debug(f"候选结果文件: {key}")
                 
                 # .jsonl.out文件就是输出文件，直接使用第一个找到的
                 if candidate_files:
                     result_file_key = candidate_files[0]
                     logger.info(f"✅ 找到输出文件: {result_file_key}")
+                
+                # 读取manifest文件
+                if manifest_file_key:
+                    try:
+                        logger.debug(f"读取manifest文件: {manifest_file_key}")
+                        manifest_response = self.s3_manager.s3.get_object(
+                            Bucket=actual_bucket,
+                            Key=manifest_file_key
+                        )
+                        manifest_content = manifest_response['Body'].read().decode('utf-8')
+                        manifest_data = json.loads(manifest_content)
+                        logger.info(f"✅ 成功读取manifest文件")
+                        logger.debug(f"Manifest内容: {json.dumps(manifest_data, indent=2)}")
+                    except Exception as e:
+                        logger.warning(f"⚠️ 读取manifest文件失败: {str(e)}")
+                        manifest_data = None
                 
                 if result_file_key:
                     logger.info(f"✅ 最终选择结果文件: {result_file_key}")
@@ -456,15 +481,24 @@ class JobManager:
             
             # 构建S3 URI
             s3_uri = f"s3://{actual_bucket}/{result_file_key}"
+            manifest_s3_uri = f"s3://{actual_bucket}/{manifest_file_key}" if manifest_file_key else None
             logger.info(f"✅ 结果获取完成! 共{len(results)}条预览记录, S3 URI: {s3_uri}")
             
-            return {
+            result_dict = {
                 'preview': results,
                 's3_uri': s3_uri,
                 'file_name': result_file_key.split('/')[-1],
                 'bucket': actual_bucket,
                 'key': result_file_key
             }
+            
+            # 添加manifest信息
+            if manifest_data:
+                result_dict['manifest'] = manifest_data
+                result_dict['manifest_s3_uri'] = manifest_s3_uri
+                logger.info(f"✅ 包含manifest信息")
+            
+            return result_dict
             
         except Exception as e:
             logger.error(f"❌ 获取任务结果失败: {str(e)}", exc_info=True)
